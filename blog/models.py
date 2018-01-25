@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils.six import python_2_unicode_compatible
+from django.urls import reverse
 
 
 class Category(models.Model):
@@ -15,7 +15,6 @@ class Category(models.Model):
     """
     name = models.CharField(max_length=100)
 
-    @python_2_unicode_compatible
     def __str__(self):
         return self.name
 
@@ -27,9 +26,9 @@ class Tag(models.Model):
     """
     name = models.CharField(max_length=100)
 
-    @python_2_unicode_compatible
     def __str__(self):
         return self.name
+
 
 class Post(models.Model):
     """
@@ -58,7 +57,7 @@ class Post(models.Model):
     # 同时我们规定文章可以没有标签，因此为标签 tags 指定了 blank=True。
     # 如果你对 ForeignKey、ManyToManyField 不了解，请看教程中的解释，亦可参考官方文档：
     # https://docs.djangoproject.com/en/1.10/topics/db/models/#relationships
-    category = models.ForeignKey(Category,on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, blank=True)
 
     # 文章作者，这里 User 是从 django.contrib.auth.models 导入的。
@@ -67,6 +66,8 @@ class Post(models.Model):
     # 因为我们规定一篇文章只能有一个作者，而一个作者可能会写多篇文章，因此这是一对多的关联关系，和 Category 类似。
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    @python_2_unicode_compatible
     def __str__(self):
         return self.title
+
+    def get_info_url(self):
+        return reverse('blog:info', kwargs={'pk': self.pk})

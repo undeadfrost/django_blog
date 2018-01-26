@@ -12,6 +12,7 @@ class IndexView(ListView):
     model = Post
     template_name = 'blog/index.html'
     context_object_name = 'post_list'
+    paginate_by = 2
 
 
 class InfoView(DetailView):

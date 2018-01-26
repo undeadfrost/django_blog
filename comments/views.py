@@ -32,7 +32,7 @@ def post_comment(request, post_pk):
 
             # 重定向到 post 的详情页，实际上当 redirect 函数接收一个模型的实例时，它会调用这个模型实例的 get_absolute_url 方法，
             # 然后重定向到 get_absolute_url 方法返回的 URL。
-            return redirect('blog:info', pk=post_pk)
+            return redirect(post)
 
         else:
             # 检查到数据不合法，重新渲染详情页，并且渲染表单的错误。
@@ -51,4 +51,4 @@ def post_comment(request, post_pk):
                        }
             return render(request, 'blog/info.html', context=context)
     # 不是 post 请求，说明用户没有提交数据，重定向到文章详情页。
-    return redirect('blog:info', pk=post_pk)
+    return redirect(post)

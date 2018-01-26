@@ -71,3 +71,6 @@ class Post(models.Model):
 
     def get_info_url(self):
         return reverse('blog:info', kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ['-created_time']

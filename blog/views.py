@@ -49,6 +49,7 @@ class ArchivesView(ListView):
     model = Post
     template_name = 'blog/index.html'
     context_object_name = 'post_list'
+    paginate_by = 2
 
     def get_queryset(self):
         year = self.kwargs.get('year')
@@ -63,6 +64,7 @@ class CategoryView(ListView):
     model = Post
     template_name = 'blog/index.html'
     context_object_name = 'post_list'
+    paginate_by = 2
 
     def get_queryset(self):
         cate = get_object_or_404(Category, pk=self.kwargs.get('pk'))

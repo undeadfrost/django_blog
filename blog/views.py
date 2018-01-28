@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Post, Category
+from .models import Post, Category, Tag
 from comments.forms import CommentForm
 from django.views.generic import ListView, DetailView
 import markdown
@@ -69,4 +69,15 @@ class CategoryView(ListView):
     def get_queryset(self):
         cate = get_object_or_404(Category, pk=self.kwargs.get('pk'))
         return Post.objects.filter(category=cate)
+
+
+class TagView(ListView):
+    model = Tag
+    template_name = 'blog/index.html'
+    context_object_name = 'post_list'
+    paginate_by = 2
+
+    def get_queryset(self):
+        tag = get_object_or_404(Tag, pk=self.kwargs.get('pk'))
+        return Post.objects.filter(tags=tag)
 

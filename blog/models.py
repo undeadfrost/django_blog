@@ -15,6 +15,10 @@ class Category(models.Model):
     Django 内置的全部类型可查看文档：
     https://docs.djangoproject.com/en/1.10/ref/models/fields/#field-types
     """
+    class Meta:
+        verbose_name = '分类'
+        verbose_name_plural = '分类'
+
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -26,6 +30,10 @@ class Tag(models.Model):
     标签 Tag 也比较简单，和 Category 一样。
     再次强调一定要继承 models.Model 类！
     """
+    class Meta:
+        verbose_name = '标签'
+        verbose_name_plural = '标签'
+
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -36,6 +44,10 @@ class Post(models.Model):
     """
     文章的数据库表稍微复杂一点，主要是涉及的字段更多。
     """
+    class Meta:
+        verbose_name = '文章'
+        verbose_name_plural = '文章'
+        ordering = ['-created_time']
 
     # 文章标题
     title = models.CharField(max_length=70, verbose_name='标题')
@@ -80,9 +92,6 @@ class Post(models.Model):
     def increase_views(self):
         self.views += 1
         self.save(update_fields=['views'])
-
-    class Meta:
-        ordering = ['-created_time']
 
     def save(self, *args, **kwargs):
         # 如果没有填写摘要

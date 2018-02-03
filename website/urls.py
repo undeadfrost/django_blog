@@ -14,11 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+import xadmin
 from django.urls import path, include
 from blog.feeds import AllPostRssFeed
+from xadmin.plugins import xversion
+
+xadmin.autodiscover()
+xversion.register_models()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('xadmin', xadmin.site.urls),
     path('', include('blog.urls')),
     path('', include('comments.urls')),
     path('all/rss/', AllPostRssFeed(), name='rss'),

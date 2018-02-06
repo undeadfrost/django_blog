@@ -78,7 +78,7 @@ class Post(models.Model):
     # django.contrib.auth 是 Django 内置的应用，专门用于处理网站用户的注册、登录等流程，User 是 Django 为我们已经写好的用户模型。
     # 这里我们通过 ForeignKey 把文章和 User 关联了起来。
     # 因为我们规定一篇文章只能有一个作者，而一个作者可能会写多篇文章，因此这是一对多的关联关系，和 Category 类似。
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='作者')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='作者', editable=False)
 
     # 文章访问量
     views = models.PositiveIntegerField(default=0, editable=False)

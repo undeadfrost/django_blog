@@ -9,6 +9,11 @@ class PostAdmin(admin.ModelAdmin):
     filter_horizontal = ['tags']
     # raw_id_fields = ['category']
 
+    def save_model(self, request, obj, form, change):
+        if not obj.id:
+            obj.author = request.user
+        obj.save()
+
 
 admin.site.site_title = '博客管理系统'
 admin.site.site_header = '博客管理系统'
